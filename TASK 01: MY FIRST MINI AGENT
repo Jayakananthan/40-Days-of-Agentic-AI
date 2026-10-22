@@ -1,0 +1,38 @@
+TASK 01: MY FIRST MINI AGENT
+AI Agentic Course - Practice Task
+=========================================
+
+GOAL
+----
+Check your understanding of the basics we have covered so far:
+LLMs, RAG, and a basic agent using LangChain.
+
+Time needed: about 30 to 45 minutes.
+
+
+PART 1: LLM (about 10 minutes)
+------------------------------
+1. Write a Python script that uses LangChain to send one question to an LLM.
+2. Add a system prompt that gives the model a role.
+   Example: "You are a friendly tutor for beginners."
+3. Run the script twice, once with temperature=0 and once with temperature=1.
+4. Write one line about what changed between the two outputs.
+
+!pip install langchain langchain-groq python-dotenv
+from dotenv import load_dotenv
+from langchain_groq import ChatGroq
+from langchain_core.messages import SystemMessage, HumanMessage
+
+load_dotenv() 
+
+messages = [
+    SystemMessage(content="You are a friendly tutor for beginners."),
+    HumanMessage(content="What is OSS? Explain in 3 sentences.")
+]
+
+for temp in (0, 1):
+    llm = ChatGroq(model="openai/gpt-oss-120b", temperature=temp)
+    response = llm.invoke(messages)
+    print(f"===== Temperature = {temp} =====")
+    print(response.content)
+    print()
